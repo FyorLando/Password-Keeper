@@ -6,41 +6,15 @@ using System.IO;
 
 public class Edit_Screen : MonoBehaviour
 {
+    public Service answer = new Service(); // Answer to the request
+
+    /// <summary>
+    /// Searching for service in array of Services Names from DB
+    /// </summary>
+    /// <param name="s1"></param>
+    /// <param name="s_arr"></param>
+    /// <returns></returns>
     
-
-    public string[] answer = new string[3];
-    public void Searchig_Login_Password()
-    {
-        string[] current_service = new string[3];
-        using (StreamReader sr = new StreamReader("PKF/lpall.txt"))
-        {
-            while (true)
-            {
-                current_service = sr.ReadLine().Split();
-                if (Service.text == current_service[0])
-                {
-                    answer[0] = current_service[0];
-                    answer[1] = current_service[1];
-                    answer[2] = current_service[2];
-                    break;
-                }
-            }
-        }
-
-    }
-
-
-    bool Search_For_Service(string s1, string[] s_arr)
-    {
-        for (int i = 0; i < s_arr.Length; i++)
-        {
-            if (s_arr[i] == s1)
-            {
-                return true;
-            }
-        }
-        return false;
-    }
 
     public InputField Service;
     public InputField Login;
@@ -72,7 +46,7 @@ public class Edit_Screen : MonoBehaviour
     {
         if (Service.text != "")
         {
-            if (!Search_For_Service(Service.text, All_Services.Services))
+            if (!MyDataBase.Search_For_Service(Service.text, All_Services.Services_Names))
             {
                 Old_Login.text = "";
                 Old_Password.text = "";
@@ -86,26 +60,28 @@ public class Edit_Screen : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Giving results of searching in DB
+    /// </summary>
     public void Search()
     {
-        
         if (Service.text == "")
         {
-            Edit_Windows("Tupoi User");
+            Edit_Windows("Nothing Is Written");
         }
-        else if (Search_For_Service(Service.text, All_Services.Services))
+        else if (MyDataBase.Search_For_Service(Service.text, All_Services.Services_Names))
         {
             Edit_Windows("Edit or Delete");
-            Searchig_Login_Password();
-            Old_Login.text = answer[1];
-            Old_Password.text = answer[2];
+            answer = MyDataBase.Search_Data(Service.text);
+            Old_Login.text = answer.Login;
+            Old_Password.text = answer.Password;
 
         }
         else
         {
             if (Contains_(Service.text))
             {
-                System_Text.text = "Уберите пробелы, а то бан!";
+                System_Text.text = "No spaces between words!";
                 System_Text.color = Color.red;
             }
             else 
@@ -115,68 +91,70 @@ public class Edit_Screen : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Changing system-state window and buttons
+    /// </summary>
+    /// <param name="type_of_action"></param>
     void Edit_Windows(string type_of_action)
     {
-        if (type_of_action == "Edit or Delete")
+        switch (type_of_action)
         {
-            Change_Button.SetActive(true);
-            Delete_Button.SetActive(true);
-            New_Button.SetActive(false);
+            case "Edit or Delete":
+                Change_Button.SetActive(true);
+                Delete_Button.SetActive(true);
+                New_Button.SetActive(false);
 
-            Login_Box.SetActive(true);
-            Password_Box.SetActive(true);
-            Back_Button.SetActive(true);
+                Login_Box.SetActive(true);
+                Password_Box.SetActive(true);
+                Back_Button.SetActive(true);
 
-            System_Text.text = "Такой сервис уже есть. Измените данные или удалите запись.";
-            System_Text.color = Color.green;
+                System_Text.text = "The service already exitsts. Change or delete data.";
+                System_Text.color = Color.green;
+                break;
+            case "New":
+                Change_Button.SetActive(false);
+                Delete_Button.SetActive(false);
+                New_Button.SetActive(true);
+
+                Back_Button.SetActive(true);
+                Login_Box.SetActive(true);
+                Password_Box.SetActive(true);
+                System_Text.text = "Type the name of service, login and password.";
+                System_Text.color = Color.black;
+                break;
+            case "Nothing Is Written":
+                Change_Button.SetActive(false);
+                Delete_Button.SetActive(false);
+                New_Button.SetActive(false);
+
+                Back_Button.SetActive(true);
+                Login_Box.SetActive(false);
+                Password_Box.SetActive(false);
+                System_Text.text = "You didn't write anything.";
+                System_Text.color = Color.red;
+                break;
+            default:
+                Change_Button.SetActive(false);
+                Delete_Button.SetActive(false);
+                New_Button.SetActive(false);
+
+                Login_Box.SetActive(false);
+                Password_Box.SetActive(false);
+                Back_Button.SetActive(true);
+                System_Text.text = "Type the name of the service.";
+                System_Text.color = Color.black;
+                break;
         }
-        else if (type_of_action == "New")
-        {
-            Change_Button.SetActive(false);
-            Delete_Button.SetActive(false);
-            New_Button.SetActive(true);
-
-            Back_Button.SetActive(true);
-            Login_Box.SetActive(true);
-            Password_Box.SetActive(true);
-            System_Text.text = "Введите название сервиса, логин и пароль.";
-            System_Text.color = Color.black;
-        }
-        else if (type_of_action == "Tupoi User")
-        {
-            Change_Button.SetActive(false);
-            Delete_Button.SetActive(false);
-            New_Button.SetActive(false);
-
-            Back_Button.SetActive(true);
-            Login_Box.SetActive(false);
-            Password_Box.SetActive(false);
-            System_Text.text = "Вы ничего не ввели.";
-            System_Text.color = Color.red;
-        }
-        else
-        {
-            Change_Button.SetActive(false);
-            Delete_Button.SetActive(false);
-            New_Button.SetActive(false);
-
-            Login_Box.SetActive(false);
-            Password_Box.SetActive(false);
-            Back_Button.SetActive(true);
-            System_Text.text = "Введите название сервиса.";
-            System_Text.color = Color.black;
-        }
-        
     }
 
     public void New_Data()
     {
-        if (Search_For_Service(Service.text, All_Services.Services))
+        if (MyDataBase.Search_For_Service(Service.text, All_Services.Services_Names))
         {
             Edit_Windows("Edit or Delete");
-            Searchig_Login_Password();
-            Old_Login.text = answer[1];
-            Old_Password.text = answer[2];
+            answer = MyDataBase.Search_Data(Service.text);
+            Old_Login.text = answer.Login;
+            Old_Password.text = answer.Password;
         }
         else
         {
@@ -184,35 +162,26 @@ public class Edit_Screen : MonoBehaviour
             {
                 if (Contains_(Login.text) || Contains_(Password.text))
                 {
-                    System_Text.text = "Уберите пробелы, а то бан!";
+                    System_Text.text = "No spaces between words!";
                     System_Text.color = Color.red;
                 }
                 else
                 {
-                    using (StreamWriter sw = File.AppendText("PKF/services.txt"))
-                    {
-                        sw.Write(" " + Service.text);
-                    }
-
-                    using (StreamWriter sw = File.AppendText("PKF/lpall.txt"))
-                    {
-                        sw.WriteLine(Service.text + " " + Login.text + " " + Password.text + '\n');
-                    }
-
-                    System_Text.text = "Вы добавили запись.";
+                    MyDataBase.Write_Data(Service.text, Login.text, Password.text);
+                    System_Text.text = "You added new service.";
                     System_Text.color = Color.green;
                 }
             }
             else
             {
-                System_Text.text = "Вы что-то не ввели.";
+                System_Text.text = "You forgot to write something.";
                 System_Text.color = Color.red;
             }
         }
         
     }
 
-    bool Contains_(string s1)
+    private bool Contains_(string s1)
     {
         for (int i = 0; i < s1.Length; i++)
         {
@@ -228,7 +197,7 @@ public class Edit_Screen : MonoBehaviour
     {
         if (Contains_(Login.text) || Contains_(Password.text))
         {
-            System_Text.text = "Уберите пробелы, а то бан!";
+            System_Text.text = "No spaces between words!";
             System_Text.color = Color.red;
         }
         else
@@ -247,46 +216,18 @@ public class Edit_Screen : MonoBehaviour
 
             if (curr_login != "" && curr_password != "")
             {
-                string rewrite = "";
+                MyDataBase.Edit_Data(Service.text, curr_login, curr_password);
 
-                using (StreamReader sr = new StreamReader("PKF/lpall.txt"))
-                {
-                    string st = sr.ReadLine();
-                    string[] curr_data = st.Split();
-                    while (curr_data[0] != Service.text)
-                    {
-                        rewrite += st + '\n';
-                        st = sr.ReadLine();
-                        curr_data = st.Split();
-                    }
-
-                    st = sr.ReadLine();
-                    while (st != null && st != "")
-                    {
-                        curr_data = st.Split();
-                        rewrite += st + '\n';
-                        st = sr.ReadLine();
-                    }
-
-                }
-
-                File.Delete("PKF/lpall.txt");
-
-                using (StreamWriter sw = new StreamWriter("PKF/lpall.txt", true))
-                {
-                    sw.WriteLine(rewrite + Service.text + " " + curr_login + " " + curr_password + '\n');
-                }
-
-                System_Text.text = "Вы изменили запись.";
+                System_Text.text = "You edited service data.";
                 System_Text.color = Color.green;
-                Searchig_Login_Password();
-                Old_Login.text = answer[1];
-                Old_Password.text = answer[2];
+                answer = MyDataBase.Search_Data(Service.text);
+                Old_Login.text = answer.Login;
+                Old_Password.text = answer.Password;
 
             }
             else
             {
-                System_Text.text = "Вы что-то не ввели.";
+                System_Text.text = "You forgot to write something.";
                 System_Text.color = Color.red;
             }
         }
@@ -295,86 +236,18 @@ public class Edit_Screen : MonoBehaviour
 
     public void Delete_Data()
     {
-        if (Search_For_Service(Service.text, All_Services.Services))
+        if (MyDataBase.Search_For_Service(Service.text, All_Services.Services_Names))
         {
             if (Contains_(Login.text) || Contains_(Password.text))
             {
-                System_Text.text = "Уберите пробелы, а то бан!";
+                System_Text.text = "No spaces between words!";
                 System_Text.color = Color.red;
             }
             else
             {
-                string rewrite = "";
+                MyDataBase.Delete_Data(Service.text);
 
-                using (StreamReader sr = new StreamReader("PKF/lpall.txt"))
-                {
-                    string st = sr.ReadLine();
-                    string[] curr_data = st.Split();
-                    while (curr_data[0] != Service.text)
-                    {
-                        rewrite += st + '\n';
-                        st = sr.ReadLine();
-                        curr_data = st.Split();
-                    }
-
-                    st = sr.ReadLine();
-                    while (st != null && st != "")
-                    {
-                        curr_data = st.Split();
-                        rewrite += st + '\n';
-                        st = sr.ReadLine();
-                    }
-
-                }
-
-                File.Delete("PKF/lpall.txt");
-
-                using (StreamWriter sw = new StreamWriter("PKF/lpall.txt", true))
-                {
-                    sw.WriteLine(rewrite);
-                }
-
-                rewrite = "";
-
-                using (StreamReader reader = new StreamReader("PKF/services.txt", true))
-                {
-                    string st = reader.ReadLine();
-                    string[] curr_data = st.Split();
-                    bool ch = false;
-                    if (curr_data[0] != Service.text)
-                    {
-                        rewrite += curr_data[0];
-                    }
-                    else
-                    {
-                        ch = true;
-                    }
-                    for (int i = 1; i < curr_data.Length; i++)
-                    {
-                        if (curr_data[i] != Service.text)
-                        {
-                            if (ch)
-                            {
-                                rewrite += curr_data[i];
-                                ch = false;
-                            }
-                            else
-                            {
-                                rewrite += " " + curr_data[i];
-                            }
-
-                        }
-                    }
-                }
-
-                File.Delete("PKF/services.txt");
-
-                using (StreamWriter sw = new StreamWriter("PKF/services.txt", true))
-                {
-                    sw.Write(rewrite);
-                }
-
-                System_Text.text = "Вы удалили запись.";
+                System_Text.text = "You deleted service.";
                 System_Text.color = Color.red;
                 Old_Login.text = "";
                 Old_Password.text = "";
@@ -388,7 +261,7 @@ public class Edit_Screen : MonoBehaviour
 
             Login_Box.SetActive(false);
             Password_Box.SetActive(false);
-            System_Text.text = "Введите название сервиса.";
+            System_Text.text = "Write service name.";
             System_Text.color = Color.black;
         }
         
@@ -405,7 +278,7 @@ public class Edit_Screen : MonoBehaviour
 
         Login_Box.SetActive(false);
         Password_Box.SetActive(false);
-        System_Text.text = "Введите название сервиса.";
+        System_Text.text = "Write service name.";
         System_Text.color = Color.black;
 
         Edit_Window.SetActive(false);

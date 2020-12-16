@@ -6,8 +6,6 @@ using System.Threading.Tasks;
 
 public class Service
 {
-    protected int ID;
-
     /// <summary>
     /// Service name
     /// </summary>
@@ -23,11 +21,22 @@ public class Service
     /// </summary>
     public string Password;
 
-    public Service(string name = "None", string login = "None", string password = "None", int id = -1)
+    public Service(string name = null, string login = null, string password = null)
     {
         this.Name = name;
         this.Login = login;
         this.Password = password;
-        this.ID = id;
+    }
+
+    public Service(string[] service)
+    {
+        this.Name = service[0];
+        this.Login = service[1];
+        this.Password = service[2];
+    }
+
+    public Service Copy()
+    {
+        return new Service(this.Name, this.Login, this.Password);
     }
 }

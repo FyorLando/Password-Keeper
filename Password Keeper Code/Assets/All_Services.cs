@@ -7,11 +7,18 @@ using System.Security.Cryptography;
 
 public class All_Services : MonoBehaviour
 {
-    bool StringsAreEqual(string s1, string s2)
+    /// <summary>
+    /// Is first string a part of second
+    /// </summary>
+    /// <param name="s_small"></param>
+    /// <param name="s_big"></param>
+    /// <returns></returns>
+    private bool IsPartOfTheString(string s_small, string s_big)
     {
-        for (int i = 0; i < s2.Length; i++)
+        if (s_small.Length > s_big.Length) { return false; }
+        for (int i = 0; i < s_small.Length; i++)
         {
-            if (s2[i] != s1[i])
+            if (s_small[i] != s_big[i])
             {
                 return false;
             }
@@ -19,62 +26,67 @@ public class All_Services : MonoBehaviour
         return true;
     }
 
-    bool Total_Equal(string s1, string s2)
+    /// <summary>
+    /// Lengths of two strings are equal
+    /// </summary>
+    /// <param name="s1"></param>
+    /// <param name="s2"></param>
+    /// <returns></returns>
+    private bool Total_Equal(string s1, string s2)
     {
-        if (s1.Length == s2.Length)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        return s1.Length == s2.Length;
     }
 
-
-    public static string[] Services; // Все сервисы с индексами
+    /// <summary>
+    /// All Services Names from DB
+    /// </summary>
+    public static string[] Services_Names;
     public Text Searching_Service;
     public Text Services_Output;
-    public string SS;
-    string Service_to_find;
+
+    /// <summary>
+    /// Service from search-line
+    /// </summary>
+    public static Service SearchedService = new Service();
 
     void Start()
     {
-        
+        MyDataBase.UpdateServices();
     }
+
+    private string PrevSearch = ""; // Previous service name in search-line
 
     void Update()
     {
-        using (StreamReader sr = new StreamReader("PKF/services.txt"))
+        if (PrevSearch != Searching_Service.text)
         {
-            Services = sr.ReadLine().Split();
+            Search_By_Word(Searching_Service.text);
+            PrevSearch = Searching_Service.text;
         }
-        SS = Searching_Service.text;
-        Search_By_Word(SS);
+        
     }
 
-    void Search_By_Word(string SS)
+    /// <summary>
+    /// Searchs for typed service name
+    /// </summary>
+    /// <param name="searching_service"></param>
+    private void Search_By_Word(string searching_service)
     {
-        
-        if (SS.Length >= 1)
+        if (searching_service.Length >= 1)
         {
             string output = "";
-            for (int i = 0; i < Services.Length; i++)
+            for (int i = 0; i < Services_Names.Length; i++)
             {
-                if (Services[i].Length >= SS.Length)
+                if (IsPartOfTheString(searching_service, Services_Names[i]))
                 {
-                    if (StringsAreEqual(Services[i], SS))
+                    output += Services_Names[i];
+                    if (Total_Equal(Services_Names[i], searching_service))
                     {
-                        output += Services[i];
-                        if (Total_Equal(Services[i], SS))
-                        {
-                            Service_to_find = SS;
-                            output += " - НАЙДЕНО";
-                            break;
-                        }
-                        output += '\n';
+                         output += " - НАЙДЕНО";
+                         SearchedService = MyDataBase.Search_Data(Searching_Service.text); // Seting founded data into SearchedService
                     }
-                }          
+                    output += '\n';
+                }
             }
 
             Services_Output.text = output;
@@ -86,27 +98,4 @@ public class All_Services : MonoBehaviour
         
     }
 
-    public static Service answer = new Service();
-
-    public void Searchig_Login_Password()
-    {
-        string[] current_service = new string[3];
-        using (StreamReader sr = new StreamReader("PKF/lpall.txt"))
-        {
-            while (true)
-            {
-                current_service = sr.ReadLine().Split();
-                if (Service_to_find == current_service[0])
-                {
-                    answer.Name = current_service[0];
-                    answer.Login = current_service[1];
-                    answer.Password = current_service[2];
-                    break;
-                }
-            } 
-        }
-        
-    }
-
-    
 }

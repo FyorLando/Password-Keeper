@@ -61,6 +61,7 @@
     <Compile Include="Assets\Login_Check.cs" />
     <Compile Include="Assets\Edit_Screen.cs" />
     <Compile Include="Assets\Service.cs" />
+    <Compile Include="Assets\MyDateBase.cs" />
     <Compile Include="Assets\All_Services.cs" />
   </ItemGroup>
   <ItemGroup>

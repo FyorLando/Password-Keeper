@@ -25,7 +25,7 @@ public class Show_All : MonoBehaviour
     {
         if (Login_Check.isLogined)
         {
-            Services_Sorted = All_Services.Services;
+            Services_Sorted = All_Services.Services_Names;
             Array.Sort(Services_Sorted);
 
             for (int i = 0; i < Services_Sorted.Length; i++)

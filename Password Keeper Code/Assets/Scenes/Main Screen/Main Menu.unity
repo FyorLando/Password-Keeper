@@ -1455,8 +1455,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u0412\u0432\u0435\u0434\u0438\u0442\u0435 \u043D\u0430\u0437\u0432\u0430\u043D\u0438\u0435
-    \u0441\u0435\u0440\u0432\u0438\u0441\u0430"
+  m_Text: Write service name.
 --- !u!222 &322985454
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2086,7 +2085,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u041D\u0430\u0437\u0432\u0430\u043D\u0438\u0435 \u0441\u0435\u0440\u0432\u0438\u0441\u0430:"
+  m_Text: 'Service name:'
 --- !u!222 &433660039
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2309,7 +2308,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Searching_Service: {fileID: 1594815906}
   Services_Output: {fileID: 305036234}
-  SS: 
 --- !u!114 &490594382
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2354,10 +2352,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 624ef6b9d424a0d4cbb279ffe8107525, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  answer:
-  - 
-  - 
-  - 
   Service: {fileID: 22450560}
   Login: {fileID: 1695060383}
   Password: {fileID: 1493392505}
@@ -3050,7 +3044,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u041F\u0430\u0440\u043E\u043B\u044C:"
+  m_Text: 'Password:'
 --- !u!222 &889352937
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3330,7 +3324,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u041F\u0430\u0440\u043E\u043B\u044C:"
+  m_Text: 'Password:'
 --- !u!222 &1047793276
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3898,7 +3892,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u041D\u0430\u0437\u0432\u0430\u043D\u0438\u0435 \u0441\u0435\u0440\u0432\u0438\u0441\u0430:"
+  m_Text: 'Service name:'
 --- !u!1 &1194390762
 GameObject:
   m_ObjectHideFlags: 0
@@ -4130,7 +4124,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u041B\u043E\u0433\u0438\u043D:"
+  m_Text: 'Login:'
 --- !u!1 &1231646241
 GameObject:
   m_ObjectHideFlags: 0
@@ -4441,18 +4435,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 490594381}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: Searchig_Login_Password
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 490594383}
         m_TargetAssemblyTypeName: 
         m_MethodName: Start_Password
@@ -4607,7 +4589,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u041B\u043E\u0433\u0438\u043D:"
+  m_Text: 'Login:'
 --- !u!222 &1331873551
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4686,7 +4668,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u041B\u043E\u0433\u0438\u043D:"
+  m_Text: 'Login:'
 --- !u!222 &1383525983
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -5725,7 +5707,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u041D\u0430\u0437\u0432\u0430\u043D\u0438\u0435 \u0441\u0435\u0440\u0432\u0438\u0441\u0430:"
+  m_Text: 'Service name:'
 --- !u!222 &1667461668
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -6237,7 +6219,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u041F\u0430\u0440\u043E\u043B\u044C:"
+  m_Text: 'Password:'
 --- !u!222 &1755315190
 CanvasRenderer:
   m_ObjectHideFlags: 0

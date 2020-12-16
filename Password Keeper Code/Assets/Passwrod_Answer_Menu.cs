@@ -14,20 +14,23 @@ public class Passwrod_Answer_Menu : MonoBehaviour
 
     public void Back()
     {
+        Service.text = "";
+        Login.text = "";
+        Password.text = "";
         Pass_Answer.SetActive(false);
         Main_Screen.SetActive(true);
     }
 
     public void Start_Password()
     {
-        if (Login_Check.isLogined)
+        if (Login_Check.isLogined && All_Services.SearchedService.Name != null)
         {
             Pass_Answer.SetActive(true);
             Main_Screen.SetActive(false);
 
-            Service.text = All_Services.answer.Name;
-            Login.text = All_Services.answer.Login;
-            Password.text = All_Services.answer.Password;
+            Service.text = All_Services.SearchedService.Name;
+            Login.text = All_Services.SearchedService.Login;
+            Password.text = All_Services.SearchedService.Password;
         }
         
     }
@@ -44,17 +47,18 @@ public class Passwrod_Answer_Menu : MonoBehaviour
 
     public void Copy(int position)
     {
-        if (position == 0)
+        switch (position)
         {
-            GUIUtility.systemCopyBuffer = Service.text;
-        }
-        else if (position == 1)
-        {
-            GUIUtility.systemCopyBuffer = Login.text;
-        }
-        else
-        {
-            GUIUtility.systemCopyBuffer = Password.text;
-        }
+            case 0:
+                GUIUtility.systemCopyBuffer = Service.text;
+                break;
+            case 1:
+                GUIUtility.systemCopyBuffer = Login.text;
+                break;
+            case 2:
+                GUIUtility.systemCopyBuffer = Password.text;
+                break;
+    }
+        
     }
 }
