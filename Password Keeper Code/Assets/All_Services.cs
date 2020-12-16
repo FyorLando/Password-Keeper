@@ -7,9 +7,7 @@ using System.Security.Cryptography;
 
 public class All_Services : MonoBehaviour
 {
-    
-
-    bool String_Check(string s1, string s2)
+    bool StringsAreEqual(string s1, string s2)
     {
         for (int i = 0; i < s2.Length; i++)
         {
@@ -65,7 +63,7 @@ public class All_Services : MonoBehaviour
             {
                 if (Services[i].Length >= SS.Length)
                 {
-                    if (String_Check(Services[i], SS))
+                    if (StringsAreEqual(Services[i], SS))
                     {
                         output += Services[i];
                         if (Total_Equal(Services[i], SS))
@@ -88,7 +86,7 @@ public class All_Services : MonoBehaviour
         
     }
 
-    public static string[] answer = new string[3];
+    public static Service answer = new Service();
 
     public void Searchig_Login_Password()
     {
@@ -100,9 +98,9 @@ public class All_Services : MonoBehaviour
                 current_service = sr.ReadLine().Split();
                 if (Service_to_find == current_service[0])
                 {
-                    answer[0] = current_service[0];
-                    answer[1] = current_service[1];
-                    answer[2] = current_service[2];
+                    answer.Name = current_service[0];
+                    answer.Login = current_service[1];
+                    answer.Password = current_service[2];
                     break;
                 }
             } 

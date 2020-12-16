@@ -25,9 +25,9 @@ public class Passwrod_Answer_Menu : MonoBehaviour
             Pass_Answer.SetActive(true);
             Main_Screen.SetActive(false);
 
-            Service.text = All_Services.answer[0];
-            Login.text = All_Services.answer[1];
-            Password.text = All_Services.answer[2];
+            Service.text = All_Services.answer.Name;
+            Login.text = All_Services.answer.Login;
+            Password.text = All_Services.answer.Password;
         }
         
     }
@@ -39,9 +39,7 @@ public class Passwrod_Answer_Menu : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Service.text = All_Services.answer[0];
-        Login.text = All_Services.answer[1];
-        Password.text = All_Services.answer[2];
+
     }
 
     public void Copy(int position)

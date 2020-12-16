@@ -26,13 +26,13 @@ public class Login_Check : MonoBehaviour
         if (Login_Check_Text.text == "0")
         {
             isLogined = false;
-            Are_U_Logined.text = "Вы не авторизованы";
+            Are_U_Logined.text = "You are not logged in";
             Are_U_Logined.color = Color.red;
         }
         else
         {
             isLogined = true;
-            Are_U_Logined.text = "Вы авторизованы";
+            Are_U_Logined.text = "You are logged in";
             Are_U_Logined.color = Color.green;
         }
     }
